@@ -6,6 +6,10 @@ open System.Collections.Generic
 [<AbstractClass>]
 type LogSource(name: String) =
 
+    let writeLogEvent (logger: ILogger) (logEvent: LogEvent) =
+        logEvent.SourceName <- name
+        logger.WriteLogEvent(logEvent)
+
     member val Id = Guid.NewGuid() with get, set
     member val Loggers = new List<ILogger>() with get
     member val Name = name with get
@@ -21,4 +25,4 @@ type LogSource(name: String) =
             LogSourceAnalyzer.analyzeClass(this, this.Id)
             logEvent := LogSourceAnalyzer.retrieveLogSourceInfo(this.Id, logId, args)
         
-        this.Loggers.ForEach(fun logger -> logger.WriteLogEvent((!logEvent).Value))
+        this.Loggers.ForEach(fun logger -> writeLogEvent logger ((!logEvent).Value))
