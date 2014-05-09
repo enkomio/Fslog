@@ -27,7 +27,7 @@ Define your logging source:
         }
     }
 
-Configure you log provider:
+Configure your log provider:
 
 	var logProvider = new LogProvider();
     logProvider.AddLogger(new ConsoleLogger(LogLevel.Informational));
@@ -52,7 +52,7 @@ Define your logging source:
 	    member this.SayPayAttentionTo(name: String) =
 	        this.WriteLog(2, [|name|])
 
-Configure you log provider:
+Configure your log provider:
 
 	let logProvider = new LogProvider()
     logProvider.AddLogger(new ConsoleLogger(LogLevel.Informational))
