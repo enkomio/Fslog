@@ -10,7 +10,7 @@
 		<projectUrl>https://github.com/enkomio/Fslog</projectUrl>
 		<licenseUrl>https://github.com/enkomio/Fslog/blob/master/COPYING</licenseUrl>
 		<releaseNotes>@releaseNotes@</releaseNotes>
-		<tags>build, fslog, fsharplog, f#</tags>
+		<tags>build, fslog, fsharplog, f#, log, logging</tags>
 		@dependencies@
 	</metadata>
 </package>
