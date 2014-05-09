@@ -1,4 +1,4 @@
-#r @"..\Tools\FAKE\tools\FakeLib.dll"
+#r @"..\..\Tools\FAKE\tools\FakeLib.dll"
 
 open System
 open System.IO
@@ -24,8 +24,8 @@ let buildDirectory      = baselineDirectory + @"Build\"
 let nugetDirectory      = baselineDirectory + @"Nuget\"
 
 // Tools
-let nuget   = @"../Tools/Nuget/NuGet.exe"
-let xunit   = @"../Tools/xunit-1.9.2/xunit.console.clr4.x86.exe"
+let nuget   = @"../../Tools/Nuget/NuGet.exe"
+let xunit   = @"../../Tools/xunit-1.9.2/xunit.console.clr4.x86.exe"
 
 let additionalFiles = ["RELEASE_NOTES.md"]
 
