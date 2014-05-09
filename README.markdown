@@ -2,9 +2,9 @@
 
 "FSLOG - F# Log" is a simple yet powerful logging framework written in order to be used with a semantic approach in mind.
 
-Simple usage:
+# Using FSLOG
 
-C#
+## On C#
 
 Define your logging source:
 
@@ -42,7 +42,7 @@ Call the methods on your log source to start to log messages:
 	logSource.SayPayAttentionTo("John");
 	logSource.SayHelloTo("Michael");
 
-F#
+## On F#
 
 Define your logging source:
 
@@ -72,7 +72,21 @@ Call the methods on your log source to start to log messages:
 	logSource.SayPayAttentionTo("John")
 	logSource.SayHelloTo("Michael")
 
+## How to get FSLOG
 
+You can download the source code from [https://github.com/enkomio/Fslog/archive/master.zip](https://github.com/enkomio/Fslog/archive/master.zip).
+
+<div class="row">
+  <div class="span1"></div>
+  <div class="span6">
+    <div class="well well-small" id="nuget">
+      FSLOG is also available <a href="http://www.nuget.org/packages/FSharpLog">on NuGet</a>.
+      To install the tool, run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">Package Manager Console</a>:
+      <pre>PM> Install-Package FSharpLog</pre>
+    </div>
+  </div>
+  <div class="span1"></div>
+</div>
 
 ## License information
 
