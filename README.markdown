@@ -37,6 +37,11 @@ Now you can add the log source to the log provider and forget about the last one
 	var logSource = new MyLogger();
 	logProvider.AddLogSourceToLoggers(logSource);
 
+Call the methods on your log source to start to log messages:
+	
+	logSource.SayPayAttentionTo("John");
+	logSource.SayHelloTo("Michael");
+
 F#
 
 Define your logging source:
@@ -61,6 +66,12 @@ Now you can add the log source to the log provider and forget about the last one
 	
 	let logSource = new MyLogger()
 	logProvider.AddLogSourceToLoggers(logSource)
+
+Call the methods on your log source to start to log messages:
+	
+	logSource.SayPayAttentionTo("John")
+	logSource.SayHelloTo("Michael")
+
 
 
 ## License information
