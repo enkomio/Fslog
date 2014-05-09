@@ -1,6 +1,6 @@
 # FSLOG - F# Log
 
-"FSLOG - F# Log" is a simple yet powerful logging framework written in order to be used with a semantic approch in mind.
+"FSLOG - F# Log" is a simple yet powerful logging framework written in order to be used with a semantic approach in mind.
 
 Simple usage:
 
