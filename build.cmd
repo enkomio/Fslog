@@ -10,4 +10,4 @@ SET TARGET="Default"
 
 IF NOT [%1]==[] (set TARGET="%1")
 
-rem "Tools\FAKE\tools\Fake.exe" "Scripts\build.fsx" "target=%TARGET%"
+"Tools\FAKE\tools\Fake.exe" "Scripts\build.fsx" "target=%TARGET%"

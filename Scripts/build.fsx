@@ -1,33 +1,33 @@
 #r @"..\Tools\FAKE\tools\FakeLib.dll"
 
+open System
 open System.IO
 open Fake
-open Fake.Git
-open Fake.FSharpFormatting
 open Fake.ReleaseNotesHelper
 open Fake.AssemblyInfoFile
+open Fake.Git
 
-// properties
-let projectName = "Fslog"
+// propertiesl
+let projectName = "FSharpLog"
 let projectSummary = "Fslog - A F# logging framework with semantic approach."
 let projectDescription = "Fslog is simple yet powerful F# logging framework with semantic approach."
 let authors = ["Antonio Parata"]
 let mail = "aparata@gmail.com"
 
 let release = parseReleaseNotes (File.ReadAllLines "RELEASE_NOTES.md")
-
+let packageFiles = ["ES.Fslog.dll"]
 let packages = [projectName, projectDescription]
 
-let buildDir = "./build"
-let deployDir = "./Publish"
-let nugetDir = "./nuget"
-let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName release.AssemblyVersion
-let packagesDir = "./packages"
+// Directories
+let baselineDirectory   = Path.GetFullPath(__SOURCE_DIRECTORY__ + @"\..\..\Artifacts\")
+let buildDirectory      = baselineDirectory + @"Build\"
+let nugetDirectory      = baselineDirectory + @"Nuget\"
+
+// Tools
+let nuget   = @"../Tools/Nuget/NuGet.exe"
+let xunit   = @"../Tools/xunit-1.9.2/xunit.console.clr4.x86.exe"
 
 let additionalFiles = ["RELEASE_NOTES.md"]
-
-// Targets
-Target "Clean" (fun _ -> CleanDirs [buildDir; deployDir; nugetDir])
 
 Target "RestorePackages" RestorePackages
 
@@ -44,69 +44,61 @@ Target "SetAssemblyInfo" (fun _ ->
 )
 
 Target "BuildSolution" (fun _ ->
-    MSBuildWithDefaults "Build" ["../FslogSrc/FslogSrc.sln"]
+    CleanDir buildDirectory
+
+    MSBuild buildDirectory "Build" [("Configuration", "Release")] ["../FslogSrc/FslogSrc.sln"] 
     |> Log "AppBuild-Output: "
 )
 
-Target "CreateNuGet" (fun _ ->
-    for package,description in packages do
-        (*let nugetDocsDir = nugetDir @@ "docs"
-        let nugetToolsDir = nugetDir @@ "tools"
+Target "Test" (fun _ ->
+    let dlls = !! (buildDirectory @@ "*Tests.dll")
+    
+    dlls
+    |> xUnit (fun p -> 
+        {p with
+            ToolPath = xunit
+        })
+)
 
-        CleanDir nugetDocsDir
-        CleanDir nugetToolsDir
-        
-        match package with
-        | p when p = projectName ->
-            !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir
-            CopyDir nugetToolsDir @"./lib/fsi" allFiles                   
-        | _ ->
-            CopyDir nugetToolsDir (buildDir @@ package) allFiles
-            CopyTo nugetToolsDir additionalFiles
-        !! (nugetToolsDir @@ "*.pdb") |> DeleteFiles*)
-
+Target "CreateNuGet" (fun _ ->    
+    let libDirectory = nugetDirectory + @"lib\"
+    
+    CleanDir nugetDirectory
+    CreateDir nugetDirectory
+    CreateDir libDirectory   
+    
+    packageFiles
+    |> List.map (fun file -> buildDirectory + file)
+    |> Copy libDirectory
+     
+    for package,description in packages do        
         NuGet (fun p ->
             {p with
                 Authors = authors
                 Project = package
                 Description = description
                 Version = release.NugetVersion
-                OutputPath = nugetDir
+                OutputPath = nugetDirectory
+                WorkingDir = nugetDirectory
                 Summary = projectSummary
+                Title = projectName
                 ReleaseNotes = release.Notes |> toLines
-                Dependencies =
-                    if package <> "FAKE.Core" && package <> projectName then
-                      ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
-                    else p.Dependencies
+                Dependencies = p.Dependencies
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
                 Publish = hasBuildParam "nugetkey"
-                ToolPath = "./tools/NuGet/nuget.exe"  }) "fake.nuspec"
+                ToolPath = nuget  }) "fslog.nuspec"
 )
 
-Target "Release" (fun _ ->
-    StageAll ""
-    Commit "" (sprintf "Bump version to %s" release.NugetVersion)
-    Branches.push ""
-
-    Branches.tag "" release.NugetVersion
-    Branches.pushTag "" "origin" release.NugetVersion
-)
 
 Target "Default" DoNothing
 
 // Dependencies
-"Clean"
-    ==> "RestorePackages"
+"RestorePackages"
     ==> "SetAssemblyInfo"
-    ==> "BuildSolution"
-    ==> "Test"    
-    ==> "Default"
-    ==> "CopyLicense"
-    =?> ("GenerateDocs", isLocalBuild && not isLinux)
-    =?> ("SourceLink", isLocalBuild && not isLinux)
-    =?> ("CreateNuGet", not isLinux)
-    =?> ("ReleaseDocs", isLocalBuild && not isLinux)
-    ==> "Release"
+    ==> "BuildSolution"   
+    ==> "Test"  
+    ==> "CreateNuGet"
+    ==> "Default"    
 
 // start build
 RunTargetOrDefault "Default"
