@@ -4,7 +4,7 @@
 
 # Using FSLOG
 
-## On C#
+## On C\#
 
 Define your logging source:
 
@@ -42,7 +42,7 @@ Call the methods on your log source to start to log messages:
 	logSource.SayPayAttentionTo("John");
 	logSource.SayHelloTo("Michael");
 
-## On F#
+## On F\#
 
 Define your logging source:
 
