@@ -1,3 +1,10 @@
+#### 1.0.0.4 - 30.05.2014
+* Fixed bug that forced log source to be declared as public
+* Minor improvements
+
+#### 1.0.0.3 - 27.05.2014
+* Minor bug fixing
+
 #### 1.0.0.2 - 10.05.2014
 * Fixed missed bug
 

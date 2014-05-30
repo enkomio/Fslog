@@ -9,8 +9,8 @@ open Fake.Git
 
 // propertiesl
 let projectName = "FSharpLog"
-let projectSummary = "Fslog - A F# logging framework with semantic approach."
-let projectDescription = "Fslog is simple yet powerful F# logging framework with semantic approach."
+let projectSummary = "Fslog - An F# logging framework with semantic approach."
+let projectDescription = "Fslog is a simple yet powerful F# logging framework with semantic approach."
 let authors = ["Antonio Parata"]
 let mail = "aparata@gmail.com"
 
@@ -31,15 +31,15 @@ let additionalFiles = ["RELEASE_NOTES.md"]
 
 Target "RestorePackages" RestorePackages
 
-Target "SetAssemblyInfo" (fun _ ->
-    let common = [
-         Attribute.Product "Fslog - F# Logging Framework"
-         Attribute.Version release.AssemblyVersion
-         Attribute.InformationalVersion release.AssemblyVersion
-         Attribute.FileVersion release.AssemblyVersion]
-
-    [Attribute.Title "Fslog - F# Logging Framework Library"
-     Attribute.Guid "7D77EDBF-1186-4C9C-BECB-A1F1D5305FF2"] @ common
+Target "SetAssemblyInfo" (fun _ ->  
+    [
+        Attribute.Title "Fslog - F# Logging Framework Library"
+        Attribute.Guid "7D77EDBF-1186-4C9C-BECB-A1F1D5305FF2"
+        Attribute.Product "Fslog - F# Logging Framework"
+        Attribute.Version release.AssemblyVersion
+        Attribute.InformationalVersion release.AssemblyVersion
+        Attribute.FileVersion release.AssemblyVersion
+    ]
     |> CreateFSharpAssemblyInfo "../FslogSrc/ES.Fslog/AssemblyInfo.fs"
 )
 

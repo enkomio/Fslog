@@ -30,9 +30,10 @@ module internal LogSourceAnalyzer =
                 let classAttributes = new Dictionary<Int32, LogAttribute>()
                 _logEventDescriptors.Add(logSourceId, classAttributes)
 
-                for methodInfo in classObj.GetType().GetMethods(BindingFlags.Public ||| BindingFlags.Instance) do
-                    if methodInfo.GetCustomAttributes<LogAttribute>().Any() then
-                        methodInfo.GetCustomAttributes<LogAttribute>()
+                for methodInfo in classObj.GetType().GetMethods(BindingFlags.Public ||| BindingFlags.NonPublic ||| BindingFlags.Instance) do
+                    let attributes = methodInfo.GetCustomAttributes<LogAttribute>()
+                    if attributes.Any() then
+                        attributes
                         |> Seq.head
                         |> (fun logAttribute -> classAttributes.Add(logAttribute.Id, logAttribute))
             )

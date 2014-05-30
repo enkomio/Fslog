@@ -10,7 +10,7 @@
     <RootNamespace>ES.Fslog</RootNamespace>
     <AssemblyName>ES.Fslog</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
     <Name>ES.Fslog</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -56,6 +56,9 @@
     <Compile Include="Loggers\BaseLogger.fs" />
     <Compile Include="Loggers\ConsoleLogger.fs" />
     <Compile Include="Loggers\FileLogger.fs" />
+    <Compile Include="AssemblyInfo.fs">
+      <Link>AssemblyInfo.fs</Link>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
