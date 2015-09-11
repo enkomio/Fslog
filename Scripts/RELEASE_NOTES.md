@@ -1,3 +1,7 @@
+#### 1.0.0.5 - 11.09.2015
+* Fixed bug dependant on log event sources and loggers adding order
+* Minor improvements
+
 #### 1.0.0.4 - 30.05.2014
 * Fixed bug that forced log source to be declared as public
 * Minor improvements

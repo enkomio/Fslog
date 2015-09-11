@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 2012
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ES.Fslog", "ES.Fslog\ES.Fslog.fsproj", "{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "ES.Fslog", "ES.Fslog\ES.Fslog.fsproj", "{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0C7FE8F9-FFA3-4DE7-96CE-8E60DAA47A36}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Fslog.UnitTests", "Tests\ES.Fslog.UnitTests\ES.Fslog.UnitTests.csproj", "{334A08AA-7E6B-4A44-9DBF-2537A3448C5F}"
+EndProject
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "SmokeTest", "Tests\SmokeTest\SmokeTest.fsproj", "{948C0BB1-7F7F-438D-9B2D-6413D71DFEB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,19 +17,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{334A08AA-7E6B-4A44-9DBF-2537A3448C5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{334A08AA-7E6B-4A44-9DBF-2537A3448C5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{334A08AA-7E6B-4A44-9DBF-2537A3448C5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{334A08AA-7E6B-4A44-9DBF-2537A3448C5F}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		{948C0BB1-7F7F-438D-9B2D-6413D71DFEB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948C0BB1-7F7F-438D-9B2D-6413D71DFEB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948C0BB1-7F7F-438D-9B2D-6413D71DFEB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948C0BB1-7F7F-438D-9B2D-6413D71DFEB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99F5A203-95B3-4597-BE4C-E8CA53DF3D7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{334A08AA-7E6B-4A44-9DBF-2537A3448C5F} = {0C7FE8F9-FFA3-4DE7-96CE-8E60DAA47A36}
+		{948C0BB1-7F7F-438D-9B2D-6413D71DFEB2} = {0C7FE8F9-FFA3-4DE7-96CE-8E60DAA47A36}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Tests\SmokeTest\SmokeTest.fsproj
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

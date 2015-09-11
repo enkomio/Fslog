@@ -29,6 +29,24 @@ namespace ES.Fslog.UnitTests
         }
 
         [Fact]
+        public void Log_a_critical_message_by_first_setting_the_log_source()
+        {
+            var sut = new LogProvider();
+            
+            var logSource = new StubLogSource();
+            sut.AddLogSourceToLoggers(logSource);
+
+            var mockLogger = new MockLogger();
+            sut.AddLogger(mockLogger);
+
+            logSource.SayPayAttentionTo("Dean");
+
+            Assert.True(mockLogger.LastLoggedEvent.Message.Contains("Dean"));
+            Assert.True(mockLogger.LastLoggedEvent.Level == LogLevel.Critical);
+            Assert.True(mockLogger.LastLoggedEvent.SourceName.Equals(logSource.Name, StringComparison.Ordinal));
+        }
+
+        [Fact]
         public void Ensure_that_informational_message_are_filtered_for_warning_level_logger()
         {
             var sut = new LogProvider();
@@ -41,6 +59,24 @@ namespace ES.Fslog.UnitTests
             logSource.SayHelloTo("John");
 
             Assert.Null(mockLogger.LastLoggedEvent);
+        }
+
+        [Fact]
+        public void Ensure_that_only_one_instance_of_every_logger_is_added()
+        {
+            var sut = new LogProvider();
+            var mockLogger = new MockLogger();
+            sut.AddLogger(mockLogger);
+
+            // add the same instance again
+            sut.AddLogger(mockLogger);
+
+            var logSource = new StubLogSource();
+            sut.AddLogSourceToLoggers(logSource);
+
+            logSource.SayPayAttentionTo("John");
+
+            Assert.Equal(mockLogger.NumOfLoggedEvents, 1);
         }
     }
 }
