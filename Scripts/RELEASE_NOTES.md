@@ -1,3 +1,6 @@
+#### 1.1.0.0 - 23.11.2015
+* Fixed bug in mixing adding of loggers and log sources
+
 #### 1.0.0.5 - 11.09.2015
 * Fixed bug dependant on log event sources and loggers adding order
 * Minor improvements

@@ -15,6 +15,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+Scripts/.fake/*
 
 # External tool builders
 .externalToolBuilders/

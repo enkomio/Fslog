@@ -6,14 +6,14 @@ open System.Collections.Generic
 
 type LogProvider() = 
 
-    static let _instance = new Lazy<ILogProvider>(new Func<ILogProvider>(fun () -> new LogProvider() :> ILogProvider))
+    static let _instance = new Lazy<ILogProvider>(new Func<ILogProvider>(fun () -> upcast new LogProvider()))
     let _loggers = new List<ILogger>()
     let _logSources = new List<LogSource>()
 
     let updateLoggers() =
         _logSources |> Seq.iter(fun logSource ->
-            _loggers
-            |> Seq.iter logSource.AddLogger
+            logSource.Loggers.Clear()
+            _loggers |> Seq.iter logSource.AddLogger
         )
 
     member this.AddLogSourceToLoggers(logSource: LogSource) =

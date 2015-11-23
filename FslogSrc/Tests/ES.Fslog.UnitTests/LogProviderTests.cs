@@ -78,5 +78,21 @@ namespace ES.Fslog.UnitTests
 
             Assert.Equal(mockLogger.NumOfLoggedEvents, 1);
         }
+
+        [Fact]
+        public void Ensure_that_by_adding_logsource_and_logger_we_have_a_consistent_state()
+        {
+            var sut = new LogProvider();
+            var mockLogger = new MockLogger();
+            sut.AddLogger(mockLogger);
+
+            var logSource = new StubLogSource();
+            sut.AddLogSourceToLoggers(logSource);
+
+            var consoleLogger = new ConsoleLogger(LogLevel.Informational);
+            sut.AddLogger(consoleLogger);
+            
+            Assert.Equal(logSource.Loggers.Count, 2);
+        }
     }
 }
