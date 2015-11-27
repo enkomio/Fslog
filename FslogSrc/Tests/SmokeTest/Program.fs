@@ -16,4 +16,5 @@ module Program =
         test.Ensure_that_informational_message_are_filtered_for_warning_level_logger()
         test.Ensure_that_only_one_instance_of_every_logger_is_added()
         test.Ensure_that_by_adding_logsource_and_logger_we_have_a_consistent_state()
+        test.Test_text_writer_logger()
         0

@@ -29,6 +29,10 @@ type LogProvider() =
     static member GetDefault() =
         _instance.Value
 
+    member this.Dispose() =
+        _loggers
+        |> Seq.iter(fun logger -> match logger with | :? IDisposable as disposable -> disposable.Dispose() | _ -> ())
+
     interface ILogProvider with
 
         member this.AddLogSourceToLoggers(logSource: LogSource) =
@@ -36,3 +40,6 @@ type LogProvider() =
 
         member this.AddLogger(logger: ILogger) =
             this.AddLogger(logger)
+
+        member this.Dispose() =
+            this.Dispose()

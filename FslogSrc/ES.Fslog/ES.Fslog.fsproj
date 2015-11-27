@@ -50,9 +50,11 @@
     <Compile Include="TextFormatters\ITextFormatter.fs" />
     <Compile Include="TextFormatters\ConsoleLogFormatter.fs" />
     <Compile Include="TextFormatters\FileLogFormatter.fs" />
+    <Compile Include="TextFormatters\TextWriterLogFormatter.fs" />
     <Compile Include="Loggers\BaseLogger.fs" />
     <Compile Include="Loggers\ConsoleLogger.fs" />
     <Compile Include="Loggers\FileLogger.fs" />
+    <Compile Include="Loggers\TextWriterLogger.fs" />
     <Compile Include="AssemblyInfo.fs">
       <Link>AssemblyInfo.fs</Link>
     </Compile>

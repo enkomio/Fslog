@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,6 +94,23 @@ namespace ES.Fslog.UnitTests
             sut.AddLogger(consoleLogger);
             
             Assert.Equal(logSource.Loggers.Count, 2);
+        }
+
+        [Fact]
+        public void Test_text_writer_logger()
+        {
+            var lp = new LogProvider();
+            var stringWriter = new StringWriter();
+            var sut = new TextWriterLogger(LogLevel.Informational, stringWriter);
+            lp.AddLogger(sut);
+
+            var logSource = new StubLogSource();
+            lp.AddLogSourceToLoggers(logSource);
+
+            logSource.SayHelloTo("John");
+            lp.Dispose();
+
+            Assert.True(stringWriter.GetStringBuilder().ToString().Contains("John"));
         }
     }
 }

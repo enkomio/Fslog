@@ -1,3 +1,7 @@
+#### 1.2.0.0 - 27.11.2015
+* Implemented TextWriterLogger
+* LogProvider implements IDisposable interface
+
 #### 1.1.0.0 - 23.11.2015
 * Fixed bug in mixing adding of loggers and log sources
 
