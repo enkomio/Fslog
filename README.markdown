@@ -91,6 +91,6 @@ You can download the source code from [https://github.com/enkomio/Fslog/archive/
 
 ## License information
 
-Copyright (C) 2014-2014 Antonio Parata
+Copyright (C) 2014-2015 Antonio Parata
 
 License: GNU General Public License, version 2 or later; see COPYING.txt included in this archive for details.
