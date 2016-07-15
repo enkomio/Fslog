@@ -5,14 +5,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>d88e9d8f-0f58-452b-94e1-bf0c78953179</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>ES.Fslog</RootNamespace>
-    <AssemblyName>ES.Fslog</AssemblyName>
+    <ProjectGuid>f5b0d1d9-ebda-48fd-a3b6-ed019bf6f07c</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>SmokeTests</RootNamespace>
+    <AssemblyName>SmokeTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Name>ES.Fslog</Name>
+    <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
+    <Name>SmokeTests</Name>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -23,7 +23,9 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\ES.Fslog.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\Debug\SmokeTests.XML</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,7 +34,9 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Release\ES.Fslog.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\Release\SmokeTests.XML</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -44,25 +48,21 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LogLevel.fs" />
-    <Compile Include="LogAttribute.fs" />
-    <Compile Include="LogEvent.fs" />
-    <Compile Include="ILogger.fs" />
-    <Compile Include="LogSourceAnalyzer.fs" />
-    <Compile Include="LogSource.fs" />
-    <Compile Include="ILogProvider.fs" />
-    <Compile Include="LogProvider.fs" />
-    <Compile Include="TextFormatters\ITextFormatter.fs" />
-    <Compile Include="TextFormatters\ConsoleLogFormatter.fs" />
-    <Compile Include="TextFormatters\FileLogFormatter.fs" />
-    <Compile Include="TextFormatters\TextWriterLogFormatter.fs" />
-    <Compile Include="Loggers\BaseLogger.fs" />
-    <Compile Include="Loggers\ConsoleLogger.fs" />
-    <Compile Include="Loggers\FileLogger.fs" />
-    <Compile Include="Loggers\TextWriterLogger.fs" />
-    <Compile Include="AssemblyInfo.fs">
-      <Link>AssemblyInfo.fs</Link>
-    </Compile>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Program.fs" />
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ES.Fslog\ES.Fslog.fsproj">
+      <Name>ES.Fslog</Name>
+      <Project>{d88e9d8f-0f58-452b-94e1-bf0c78953179}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\ES.Fslog.UnitTests\ES.Fslog.UnitTests.csproj">
+      <Name>ES.Fslog.UnitTests</Name>
+      <Project>{334a08aa-7e6b-4a44-9dbf-2537a3448c5f}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

@@ -1,3 +1,6 @@
+#### 1.2.0.1 - 15.07.2016
+* Fixed a concurrency bug in WriteLog method
+
 #### 1.2.0.0 - 27.11.2015
 * Implemented TextWriterLogger
 * LogProvider implements IDisposable interface

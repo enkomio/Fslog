@@ -112,5 +112,27 @@ namespace ES.Fslog.UnitTests
 
             Assert.True(stringWriter.GetStringBuilder().ToString().Contains("John"));
         }
+
+        [Fact]
+        public void Retrieve_the_number_of_loggers()
+        {
+            var lp = new LogProvider();
+            var stringWriter = new StringWriter();
+            var sut = new TextWriterLogger(LogLevel.Informational, stringWriter);
+            lp.AddLogger(sut);
+                        
+            Assert.Equal(lp.GetLoggers().Count(), 1);
+        }
+
+        [Fact]
+        public void Retrieve_the_number_of_sources()
+        {
+            var lp = new LogProvider();            
+
+            var logSource = new StubLogSource();
+            lp.AddLogSourceToLoggers(logSource);
+
+            Assert.Equal(lp.GetSources().Count(), 1);
+        }
     }
 }

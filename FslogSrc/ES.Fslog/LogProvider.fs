@@ -2,11 +2,13 @@
 
 open System
 open System.Diagnostics
+open System.Collections.Concurrent
 open System.Collections.Generic
 
 type LogProvider() = 
-
     static let _instance = new Lazy<ILogProvider>(new Func<ILogProvider>(fun () -> upcast new LogProvider()))
+    static let _logProviders = new ConcurrentDictionary<Guid, ILogProvider>()
+
     let _loggers = new List<ILogger>()
     let _logSources = new List<LogSource>()
 
@@ -15,6 +17,8 @@ type LogProvider() =
             logSource.Loggers.Clear()
             _loggers |> Seq.iter logSource.AddLogger
         )
+
+    member this.Id = Guid.NewGuid()
 
     member this.AddLogSourceToLoggers(logSource: LogSource) =
         if not <| _logSources.Contains(logSource) then
@@ -29,17 +33,37 @@ type LogProvider() =
     static member GetDefault() =
         _instance.Value
 
+    static member AddGlobal(logProvider: ILogProvider) =
+        _logProviders.[logProvider.Id]
+
+    static member Get(logProviderId: Guid) =
+        _logProviders.[logProviderId]
+
     member this.Dispose() =
         _loggers
         |> Seq.iter(fun logger -> match logger with | :? IDisposable as disposable -> disposable.Dispose() | _ -> ())
 
+    member this.GetSources() =
+        _logSources |> Seq.toArray
+
+    member this.GetLoggers() =
+        _loggers |> Seq.toArray
+
     interface ILogProvider with
+
+        member this.Id = this.Id
 
         member this.AddLogSourceToLoggers(logSource: LogSource) =
             this.AddLogSourceToLoggers(logSource)
 
         member this.AddLogger(logger: ILogger) =
             this.AddLogger(logger)
+
+        member this.GetSources() =
+            this.GetSources()
+
+        member this.GetLoggers() =
+            this.GetLoggers()
 
         member this.Dispose() =
             this.Dispose()

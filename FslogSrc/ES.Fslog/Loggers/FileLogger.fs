@@ -31,6 +31,6 @@ type FileLogger(logLevel: LogLevel, filename: String, textFormatter: ITextFormat
         member thid.Dispose() =
             lock(_syncRoot) (fun () -> 
                 if _fileStream.IsSome then
-                 _fileStream.Value.Dispose()
-                 _fileStream <- None
+                    _fileStream.Value.Dispose()
+                    _fileStream <- None
             )

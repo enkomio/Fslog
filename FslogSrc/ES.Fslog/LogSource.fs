@@ -1,12 +1,14 @@
 ﻿namespace ES.Fslog
 
 open System
+open System.Linq
 open System.Collections.Generic
+open LogSourceAnalyzer
 
 [<AbstractClass>]
 type LogSource(name: String) =
 
-    let writeLogEvent (logger: ILogger) (logEvent: LogEvent) =
+    let writeLogEvent (logEvent: LogEvent) (logger: ILogger) =
         logEvent.SourceName <- name
         logger.WriteLogEvent(logEvent)
 
@@ -20,9 +22,10 @@ type LogSource(name: String) =
 
     abstract WriteLog: Int32 * Object array -> unit
     default this.WriteLog(logId: Int32, [<ParamArray>] args: Object array) =
-        let logEvent = ref <| LogSourceAnalyzer.retrieveLogSourceInfo(this.Id, logId, args)
+        let logEvent = ref <| retrieveLogSourceInfo(this.Id, logId, args)
         if (!logEvent).IsNone then
             LogSourceAnalyzer.analyzeClass(this, this.Id)
-            logEvent := LogSourceAnalyzer.retrieveLogSourceInfo(this.Id, logId, args)
+            logEvent := retrieveLogSourceInfo(this.Id, logId, args)
         
-        this.Loggers.ForEach(fun logger -> writeLogEvent logger ((!logEvent).Value))
+        this.Loggers.ToList()
+        |> Seq.iter(writeLogEvent ((!logEvent).Value))
