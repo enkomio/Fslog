@@ -1,3 +1,6 @@
+#### 2.0.0 - 15.07.2016
+* Implemented Fluent interface
+
 #### 1.2.0.1 - 15.07.2016
 * Fixed a concurrency bug in WriteLog method
 

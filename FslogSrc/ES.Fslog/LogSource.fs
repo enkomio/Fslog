@@ -3,6 +3,8 @@
 open System
 open System.Linq
 open System.Collections.Generic
+open System.Reflection
+open System.Reflection.Emit
 open LogSourceAnalyzer
 
 [<AbstractClass>]

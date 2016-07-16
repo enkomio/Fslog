@@ -9,7 +9,14 @@ module Program =
     [<EntryPoint>]
     let main argv =         
         let version = typeof<ILogProvider>.Assembly.GetName().Version
-        Console.WriteLine("Start smoke test for version {0}", version)
+        Console.WriteLine("Start fluent tests for version {0}", version)
+        ``Create a log with one method and one parameter of informational level``()
+        ``Create a log with one method and two parameters of warning level``()
+        ``Create a log with one method and no parameters of critical level``()
+        ``Ensure that if the log level is not enough the message will not be logged``()
+        ``A more complex example``()
+        
+        Console.WriteLine("Start unit tests for version {0}", version)
         let test = new LogProviderTests()
         test.Log_a_critical_message()
         test.Log_a_critical_message_by_first_setting_the_log_source()

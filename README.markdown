@@ -4,7 +4,55 @@
 
 # Using FSLOG
 
-On C#:
+### On F#:
+
+Define your logging source:
+
+	type MyLogger() =
+	    inherit LogSource("MyLogger")
+
+	    [<Log(1, Message = "Hello: {0}", Level = LogLevel.Informational)>]
+	    member this.SayHelloTo(name: String) =
+	        this.WriteLog(1, [|name|])
+
+	    [<Log(2, Message = "Pay attention {0} !!!", Level = LogLevel.Critical)>]
+	    member this.SayPayAttentionTo(name: String) =
+	        this.WriteLog(2, [|name|])
+
+Configure your log provider:
+
+	let logProvider = new LogProvider()
+    logProvider.AddLogger(new ConsoleLogger(LogLevel.Informational))
+
+Now you can add the log source to the log provider and forget about the last one:
+	
+	let logSource = new MyLogger()
+	logProvider.AddLogSourceToLoggers(logSource)
+
+Call the methods on your log source to start to log messages:
+	
+	logSource.SayPayAttentionTo("John")
+	logSource.SayHelloTo("Michael")
+	
+### Fluent Interface
+
+It is *higly suggested* to use the fluent interface in order to create your log source. It allows to write more compact and elegant code. The Fluent interface is based on the _Builder_ pattern. Let's try to rewrite the example above with the Fluent interface:
+
+    let logSource =
+        log "MyLogger"
+        |> info "SayHello" "Hello: {0}"
+        |> critical "SayPayAttentionTo" "Pay attention {0} !!!"
+        |> build
+
+and that's all! After that you have added the log source to the log provider (as described above), you can use it by relying on the _?_ operator:
+
+    logSource?SayPayAttentionTo("John")
+    logSource?SayHelloTo("Michael")
+    
+The other supported methods are: _verbose_, _warning_ and _error_.
+
+---
+### On C#:
 
 Define your logging source:
 
@@ -42,37 +90,6 @@ Call the methods on your log source to start to log messages:
 	logSource.SayPayAttentionTo("John");
 	logSource.SayHelloTo("Michael");
 
----
-On F#:
-
-Define your logging source:
-
-	type MyLogger() =
-	    inherit LogSource("MyLogger")
-
-	    [<Log(1, Message = "Hello: {0}, Level = LogLevel.Informational)>]
-	    member this.SayHelloTo(name: String) =
-	        this.WriteLog(1, [|name|])
-
-	    [<Log(2, Message = "Pay attention {0} !!!", Level = LogLevel.Critical)>]
-	    member this.SayPayAttentionTo(name: String) =
-	        this.WriteLog(2, [|name|])
-
-Configure your log provider:
-
-	let logProvider = new LogProvider()
-    logProvider.AddLogger(new ConsoleLogger(LogLevel.Informational))
-
-Now you can add the log source to the log provider and forget about the last one:
-	
-	let logSource = new MyLogger()
-	logProvider.AddLogSourceToLoggers(logSource)
-
-Call the methods on your log source to start to log messages:
-	
-	logSource.SayPayAttentionTo("John")
-	logSource.SayHelloTo("Michael")
-
 ## How to get FSLOG
 
 You can download the source code from [https://github.com/enkomio/Fslog/archive/master.zip](https://github.com/enkomio/Fslog/archive/master.zip).
@@ -91,6 +108,6 @@ You can download the source code from [https://github.com/enkomio/Fslog/archive/
 
 ## License information
 
-Copyright (C) 2014-2015 Antonio Parata
+Copyright (C) 2014-2016 Antonio Parata
 
 License: GNU General Public License, version 2 or later; see COPYING.txt included in this archive for details.
