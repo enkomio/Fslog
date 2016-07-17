@@ -19,14 +19,16 @@ module FluentTests =
     let ``Create a log with one method and one parameter of informational level``() =        
         let sut = 
             log "FluentTest1"
-            |> info "SayHello" "Hello: {0}"
+            |> info "SayHello" "Hello: {0}!"
             |> warning "Warn" "{0} be careful!! {1}"
             |> build
-        let ml = getMockLogger(sut)
 
-        sut?SayHello("World!")
+        let ml = new MockLogger(Level = LogLevel.Informational)
+        sut?AddLogger(ml)
 
-        assert(ml.LastLoggedEvent.Message.Equals("Hello: World!", StringComparison.Ordinal))
+        sut?SayHello(sut?Name)
+        
+        assert(ml.LastLoggedEvent.Message.Equals("Hello: FluentTest1!", StringComparison.Ordinal))
 
     let ``Create a log with one method and two parameters of warning level``() =        
         let sut = 

@@ -17,12 +17,40 @@ module Reflection =
     let private ctorFlags = instanceFlags
     let inline asMethodBase(a:#MethodBase) = a :> MethodBase
 
+    let manageArgs (m: MethodBase) (args: Object array) =
+        let mutable argsList = []
+        let mutable paramsList = []
+        let methodParams = m.GetParameters()
+
+        for i=0 to (max methodParams.Length args.Length)-1 do
+            let arg =
+                if i < args.Length then args.[i]
+                else [||] :> Object
+
+            if i < methodParams.Length then
+                if methodParams.[i].CustomAttributes |> Seq.exists(fun cad -> cad.AttributeType = typeof<ParamArrayAttribute>) then
+                    paramsList <- arg::paramsList
+                else argsList <- arg::argsList
+            else paramsList <- arg::paramsList
+            
+        if not paramsList.IsEmpty then
+            argsList <- (paramsList |> List.rev |> List.toArray :> Object)::argsList
+        argsList |> List.rev |> List.toArray
+
+    let parametersTypeMatches(methodParams: ParameterInfo array, args: Object array) =
+      let mutable matches = true
+      for i=0 to (min methodParams.Length args.Length) - 1 do
+        if 
+            not(methodParams.[i].CustomAttributes |> Seq.exists(fun cad -> cad.AttributeType = typeof<ParamArrayAttribute>)) &&
+            not(methodParams.[i].ParameterType.IsAssignableFrom(args.[i].GetType())) 
+        then matches <- false
+      matches
+
     // The operator takes just instance and a name. Depending on how it is used
     // it either calls method (when 'R is function) or accesses a property
     let (?) (o:obj) name : 'R =
       // The return type is a function, which means that we want to invoke a method
       if FSharpType.IsFunction(typeof<'R>) then
-
         // Get arguments (from a tuple) and their types
         let argType, resType = FSharpType.GetFunctionElements(typeof<'R>)
         // Construct an F# function as the result (and cast it to the
@@ -31,14 +59,14 @@ module Reflection =
       
           // We treat elements of a tuple passed as argument as a list of arguments
           // When the 'o' object is 'System.Type', we call static methods
-          let methods, instance, args = 
+          let methods, instance, args =               
             let args = 
               // If argument is unit, we treat it as no arguments,
               // if it is not a tuple, we create singleton array,
               // otherwise we get all elements of the tuple
-              if argType = typeof<unit> then [| [||] :> Object |]
-              elif not(FSharpType.IsTuple(argType)) then [| [|args|] :> Object |]
-              else [| FSharpValue.GetTupleFields(args) :> Object |]
+              if argType = typeof<unit> then [||]
+              elif not(FSharpType.IsTuple(argType)) then [|args|]
+              else FSharpValue.GetTupleFields(args)
 
             // Static member call (on value of type System.Type)?
             if (typeof<System.Type>).IsAssignableFrom(o.GetType()) then 
@@ -49,17 +77,19 @@ module Reflection =
               o.GetType().GetMethods(instanceFlags) |> Array.map asMethodBase, o, args
         
           // A simple overload resolution based on the name and the number of parameters only
-          // TODO: This doesn't correctly handle multiple overloads with same parameter count
-          let methods = 
+          let methodsDef = 
             [ for m in methods do
-                if m.Name = name && m.GetParameters().Length = args.Length then yield m ]
+                let methodParameters = m.GetParameters()
+                if m.Name = name && parametersTypeMatches(methodParameters, args) then
+                  let realArgs = (manageArgs m args)
+                  if methodParameters.Length = realArgs.Length then yield (m, realArgs) ]
         
           // If we find suitable method or constructor to call, do it!
-          match methods with 
+          match methodsDef with 
           | [] -> failwithf "No method '%s' with %d arguments found" name args.Length
           | _::_::_ -> failwithf "Multiple methods '%s' with %d arguments found" name args.Length
-          | [:? ConstructorInfo as c] -> c.Invoke(args)
-          | [ m ] -> m.Invoke(instance, args) ) |> unbox<'R>
+          | [(:? ConstructorInfo as c, args)] -> c.Invoke(args)
+          | [ (m, args) ] -> m.Invoke(instance, args) ) |> unbox<'R>
 
       else
         // The result type is not an F# function, so we're getting a property
