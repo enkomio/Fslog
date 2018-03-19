@@ -1,3 +1,11 @@
+#### 2.1.0 - 19.03.2018
+* Added new fluent operator to easier the log source creation
+* Fixed some concurrency bugs and added more testing
+* Refactored code
+
+#### 2.0.1 - 18.07.2016
+* Improved reflection operator ? in order to consider the parameter types and functions that accept a variable number of parameters
+
 #### 2.0.0 - 15.07.2016
 * Implemented Fluent interface
 

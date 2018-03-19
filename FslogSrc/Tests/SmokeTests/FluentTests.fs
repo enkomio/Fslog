@@ -1,10 +1,12 @@
 ﻿namespace SmokeTest
 
 open System
-open ES.Fslog
-open ES.Fslog.UnitTests
+open System.Collections.Generic
+open System.Threading.Tasks
 open System.Reflection
 open Microsoft.FSharp.Reflection
+open ES.Fslog
+open ES.Fslog.UnitTests
 
 [<AutoOpen>]
 module FluentTests =
@@ -90,3 +92,71 @@ module FluentTests =
         assert(ml.ContainsLogMessage("Database is not reachable, this is not good!"))
         assert(not(ml.ContainsLogMessage("I will not be printed :(")))
         assert(ml.LastLoggedEvent.Message.Equals("Database is not reachable, this is not good!", StringComparison.Ordinal))
+
+    let ``Fluent creation and adding to logBuilder``() =
+        let lp = new LogProvider()
+        let mockLogger = new MockLogger(Level = LogLevel.Informational)
+        lp.AddLogger(mockLogger)
+
+        let sut =
+            log "FluentTest6"
+            |> info "Log" "Hello world from: {0}"
+            |> buildAndAdd lp
+                    
+        sut?Log("Antonio")
+        
+        assert(mockLogger.ContainsLogMessage("Hello world from: Antonio"))
+
+    let ``Ensure that concurrent logging doesn't generate any exception``() =
+        let rnd = new Random()
+
+        let lp = new LogProvider()
+        let ml = new MockLogger(Level = LogLevel.Informational)
+        lp.AddLogger(ml)
+
+        // shuffle, src: http://www.fssnip.net/L/title/Array-shuffle
+        let swap (a: _[]) x y =
+            let tmp = a.[x]
+            a.[x] <- a.[y]
+            a.[y] <- tmp
+
+        let shuffle a =
+            Array.iteri (fun i _ -> swap a i (rnd.Next(i, Array.length a))) a
+
+        let sut = 
+            log "FluentTest7"
+            |> verbose "NoPrint" "I will not be printed :("
+            |> info "Start" "Process started!"
+            |> warning "FileNotFound" "Unable to open the file {0}, create it"
+            |> warning "DirectoryNotFound" "Unable to list file in directory: {0}. Create it."
+            |> error "UnableToCreateFile" "Unable to create the file: {0} in directory: {1}"
+            |> critical "DatabaseDown" "Database is not reachable, this is not good!"
+            |> buildAndAdd lp
+
+        let callbacks = [|
+            fun () -> sut?NoPrint()
+            fun () -> sut?Start()
+            fun () -> sut?FileNotFound("log.txt")
+            fun () -> sut?DirectoryNotFound("logDirectory/")
+            fun () -> sut?UnableToCreateFile("log.txt", "logDirectory/")
+            fun () -> sut?DatabaseDown()
+        |]
+                
+        // create callbacks to invoke        
+        let allCallbacks = new List<unit -> unit>()        
+        for i=0 to rnd.Next(50, 100) do            
+            shuffle callbacks
+            callbacks |> Seq.iter(fun callback -> 
+                allCallbacks.Add(callback)
+            )
+
+        // invoke callbacks
+        Parallel.ForEach(allCallbacks, fun callback -> callback()) |> ignore
+
+        assert(ml.ContainsLogMessage("Process started!"))
+        assert(ml.ContainsLogMessage("Unable to open the file log.txt, create it"))
+        assert(ml.ContainsLogMessage("Unable to list file in directory: logDirectory/. Create it."))
+        assert(ml.ContainsLogMessage("Unable to create the file: log.txt in directory: logDirectory/"))
+        assert(ml.ContainsLogMessage("Database is not reachable, this is not good!"))
+        assert(not(ml.ContainsLogMessage("I will not be printed :(")))
+        

@@ -24,10 +24,6 @@ type LogSource(name: String) =
 
     abstract WriteLog: Int32 * Object array -> unit
     default this.WriteLog(logId: Int32, [<ParamArray>] args: Object array) =
-        let logEvent = ref <| retrieveLogSourceInfo(this.Id, logId, args)
-        if (!logEvent).IsNone then
-            LogSourceAnalyzer.analyzeClass(this, this.Id)
-            logEvent := retrieveLogSourceInfo(this.Id, logId, args)
-        
+        let logEvent = getLogEvent(this, this.Id, logId, args)
         this.Loggers.ToList()
-        |> Seq.iter(writeLogEvent ((!logEvent).Value))
+        |> Seq.iter(writeLogEvent logEvent)

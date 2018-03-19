@@ -134,5 +134,19 @@ namespace ES.Fslog.UnitTests
 
             Assert.Equal(lp.GetSources().Count(), 1);
         }
+
+        [Fact]
+        public void Specify_and_invalid_logId()
+        {
+            var lp = new LogProvider();
+            var stringWriter = new StringWriter();
+            var sut = new TextWriterLogger(LogLevel.Informational, stringWriter);
+            lp.AddLogger(sut);
+
+            var logSource = new StubLogSource();
+            lp.AddLogSourceToLoggers(logSource);
+
+            Assert.Throws<ApplicationException>(() => logSource.InvalidLogId());
+        }
     }
 }

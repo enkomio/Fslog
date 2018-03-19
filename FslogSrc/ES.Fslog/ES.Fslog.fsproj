@@ -52,8 +52,8 @@
     <Compile Include="Reflection.fs" />
     <Compile Include="LogSource.fs" />
     <Compile Include="LogSourceBuilder.fs" />
-    <Compile Include="Compose.fs" />
     <Compile Include="ILogProvider.fs" />
+    <Compile Include="Compose.fs" />
     <Compile Include="LogProvider.fs" />
     <Compile Include="TextFormatters\ITextFormatter.fs" />
     <Compile Include="TextFormatters\ConsoleLogFormatter.fs" />

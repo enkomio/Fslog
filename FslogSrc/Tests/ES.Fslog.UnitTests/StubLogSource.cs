@@ -23,5 +23,11 @@ namespace ES.Fslog.UnitTests
         {
             this.WriteLog(2, name);
         }
+
+        [Log(3, Level = LogLevel.Critical, Message = "ERROR")]
+        public void InvalidLogId()
+        {
+            this.WriteLog(4);
+        }
     }
 }

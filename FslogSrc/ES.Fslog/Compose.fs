@@ -30,3 +30,8 @@ module Compose =
 
     let build(logBuilder: LogSourceBuilder) =
         logBuilder.Build() :?> LogSource
+
+    let buildAndAdd(logProvider: #ILogProvider) (logBuilder: LogSourceBuilder)  =
+        let logSource = build(logBuilder)
+        logProvider.AddLogSourceToLoggers(logSource)
+        logSource

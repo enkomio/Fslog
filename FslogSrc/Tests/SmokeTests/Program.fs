@@ -15,6 +15,8 @@ module Program =
         ``Create a log with one method and no parameters of critical level``()
         ``Ensure that if the log level is not enough the message will not be logged``()
         ``A more complex example``()
+        ``Fluent creation and adding to logBuilder``()
+        ``Ensure that concurrent logging doesn't generate any exception``()
         
         Console.WriteLine("Start unit tests for version {0}", version)
         let test = new LogProviderTests()
@@ -24,4 +26,5 @@ module Program =
         test.Ensure_that_only_one_instance_of_every_logger_is_added()
         test.Ensure_that_by_adding_logsource_and_logger_we_have_a_consistent_state()
         test.Test_text_writer_logger()
+        test.Specify_and_invalid_logId()
         0

@@ -8,3 +8,6 @@ type LogEvent(message: String, level: LogLevel) =
     member val Level = level with get, set
     member val Timestamp = DateTime.UtcNow with get, set
     member val SourceName = String.Empty with get, set
+
+    override this.ToString() =
+        String.Format("[{0}] {1}", this.Level, this.Message)

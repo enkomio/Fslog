@@ -49,6 +49,16 @@ and that's all! After that you have added the log source to the log provider (as
     logSource?SayPayAttentionTo("John")
     logSource?SayHelloTo("Michael")
     
+You can skip the last step by creating the ``logSource`` and adding it to the ``logProvider`` at the same time with the ``buildAndAdd`` method as shown in the following piece of code:
+
+    let logSource =
+        log "MyLogger"
+        |> info "SayHello" "Hello: {0}"
+        |> critical "SayPayAttentionTo" "Pay attention {0} !!!"
+        |> buildAndAdd logSource
+	
+    logSource?SayHelloTo("Michael")
+    
 The other supported methods are: _verbose_, _warning_ and _error_.
 
 ---
