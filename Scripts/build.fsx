@@ -12,7 +12,6 @@ let projectName = "FSharpLog"
 let projectSummary = "Fslog - An F# logging framework with semantic approach."
 let projectDescription = "Fslog is a simple yet powerful F# logging framework with semantic approach."
 let authors = ["Antonio Parata"]
-let mail = "aparata@gmail.com"
 
 let release = parseReleaseNotes (File.ReadAllLines "RELEASE_NOTES.md")
 let packageFiles = ["ES.Fslog.dll"]
