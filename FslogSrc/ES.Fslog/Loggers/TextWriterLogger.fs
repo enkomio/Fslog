@@ -10,7 +10,7 @@ type TextWriterLogger(logLevel: LogLevel, textWriter: TextWriter, textFormatter:
         
     new(logLevel: LogLevel, textWriter) = new TextWriterLogger(logLevel, textWriter, new TextWriterLogFormatter())
 
-    member val Level = logLevel with get
+    default val Level = logLevel with get
 
     override this.WriteLogEvent(logEvent: LogEvent) =
         if this.EventLogLevelAllowed(logEvent.Level, this.Level) then

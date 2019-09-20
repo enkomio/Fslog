@@ -19,7 +19,7 @@ type ConsoleLogger(logLevel: LogLevel, textFormatter: ITextFormatter) =
 
     new(logLevel: LogLevel) = new ConsoleLogger(logLevel, new ConsoleLogFormatter())
 
-    member val Level = logLevel with get
+    default val Level = logLevel with get
 
     override this.WriteLogEvent(logEvent: LogEvent) =
         if this.EventLogLevelAllowed(logEvent.Level, this.Level) then

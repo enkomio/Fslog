@@ -11,7 +11,11 @@ type BaseLogger() =
         logEventLevel >= loggerLevel
 
     abstract WriteLogEvent: LogEvent ->unit    
+    abstract Level: LogLevel
     
     interface ILogger with
         member this.WriteLogEvent(logEvent: LogEvent) =
             this.WriteLogEvent(logEvent)
+
+        member this.Level  
+            with get() = this.Level

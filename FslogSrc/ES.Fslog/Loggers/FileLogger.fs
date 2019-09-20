@@ -14,7 +14,7 @@ type FileLogger(logLevel: LogLevel, filename: String, textFormatter: ITextFormat
     
     new(logLevel: LogLevel, filename: String) = new FileLogger(logLevel, filename, new FileLogFormatter())
 
-    member val Level = logLevel with get
+    default val Level = logLevel with get
     member val FileName = filename with get
 
     override this.WriteLogEvent(logEvent: LogEvent) =
