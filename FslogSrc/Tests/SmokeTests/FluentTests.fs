@@ -13,7 +13,7 @@ module FluentTests =
 
     let getMockLogger(sut: LogSource) =
         let lp = new LogProvider()
-        let mockLogger = new MockLogger(Level = LogLevel.Informational)
+        let mockLogger = new MockLogger(LogLevel.Informational)
         lp.AddLogger(mockLogger)
         lp.AddLogSourceToLoggers(sut)
         mockLogger
@@ -25,7 +25,7 @@ module FluentTests =
             |> warning "Warn" "{0} be careful!! {1}"
             |> build
 
-        let ml = new MockLogger(Level = LogLevel.Informational)
+        let ml = new MockLogger(LogLevel.Informational)
         sut?AddLogger(ml)
 
         sut?SayHello(sut?Name)
@@ -95,7 +95,7 @@ module FluentTests =
 
     let ``Fluent creation and adding to logBuilder``() =
         let lp = new LogProvider()
-        let mockLogger = new MockLogger(Level = LogLevel.Informational)
+        let mockLogger = new MockLogger(LogLevel.Informational)
         lp.AddLogger(mockLogger)
 
         let sut =
@@ -111,7 +111,7 @@ module FluentTests =
         let rnd = new Random()
 
         let lp = new LogProvider()
-        let ml = new MockLogger(Level = LogLevel.Informational)
+        let ml = new MockLogger(LogLevel.Informational)
         lp.AddLogger(ml)
 
         // shuffle, src: http://www.fssnip.net/L/title/Array-shuffle

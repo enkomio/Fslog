@@ -1,20 +1,19 @@
 ﻿namespace ES.Fslog
 
 open System
-open System.Linq
-open System.Collections.Generic
+open System.Collections.Concurrent
 open System.Reflection
 open System.Reflection.Emit
-open LogSourceAnalyzer
+open System.Threading
 
 type LogSourceBuilder(name: String) =    
-    let _assemblyName = new AssemblyName(name + "LoggerAssembly")
-    let _assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(_assemblyName, AssemblyBuilderAccess.Run)
+    let _assemblyName = new AssemblyName(name + "LoggerAssembly")    
+    let _assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(_assemblyName, AssemblyBuilderAccess.Run)
     let _moduleBuilder = _assemblyBuilder.DefineDynamicModule(_assemblyName.Name)
     let _typeBuilder = _moduleBuilder.DefineType(name + "Logger", TypeAttributes.NotPublic, typeof<LogSource>)
     let _typeConstructor = _typeBuilder.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, [|typeof<String>|])
-    let _attributes = new List<String * Int32 * CustomAttributeBuilder>()
-    let mutable _index = 0
+    let _attributes = new ConcurrentBag<String * Int32 * CustomAttributeBuilder>()    
+    let _index = ref 0
 
     do        
         // invoke the base constructor
@@ -26,21 +25,18 @@ type LogSourceBuilder(name: String) =
         ilGenerator.Emit(OpCodes.Ret)
 
     let getIndex() =
-        _index <- _index + 1
-        _index
-
-    member internal this.Attributes with get() = _attributes
-
+        Interlocked.Increment(_index)
+        
     member internal this.AddLogMethod(methodName: String, formatString: String, logLevel: LogLevel) =   
         let index = getIndex()
         let constructorInfo = typeof<LogAttribute>.GetConstructor([|typeof<Int32>|])        
         let messageProperty = typeof<LogAttribute>.GetProperty("Message")
         let levelProperty = typeof<LogAttribute>.GetProperty("Level")
         let attributeBuilder = new CustomAttributeBuilder(constructorInfo, [|box index|], [|messageProperty; levelProperty|], [|formatString :> Object; logLevel :> Object|])        
-        this.Attributes.Add(methodName, index, attributeBuilder)     
+        _attributes.Add(methodName, index, attributeBuilder)     
         
     member internal this.Build() =
-        this.Attributes
+        _attributes
         |> Seq.iter(fun (methodName, index, attribute) ->
             let writeLogMethod = typeof<LogSource>.GetMethod("WriteLog")
             let methodBuilder = _typeBuilder.DefineMethod(methodName, MethodAttributes.Public, CallingConventions.Standard, null, [|typeof<Object array>|])

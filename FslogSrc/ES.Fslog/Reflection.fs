@@ -9,6 +9,9 @@ module Reflection =
     open System.Reflection
     open Microsoft.FSharp.Reflection
 
+    let (?<-) (this : 'Source) (property : string) (value : 'Value) =
+        this.GetType().GetProperty(property).SetValue(this, value, null)
+
     // Various flags that specify what members can be called 
     // NOTE: Remove 'BindingFlags.NonPublic' if you want a version
     // that can call only public methods of classes

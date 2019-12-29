@@ -1,3 +1,13 @@
+### 2.3.0 - 29.12.2019
+* Created .NET Core version
+* Some minor refactoring
+
+### 2.2.0 - 21.09.2019
+* Exposed Log level property
+
+#### 2.1.1 - 23.05.2018
+* Added a new feature to the reflection class
+
 #### 2.1.0 - 19.03.2018
 * Added new fluent operator to easier the log source creation
 * Fixed some concurrency bugs and added more testing

@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>2.3.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\ES.Fslog\AssemblyInfo.fs" Link="AssemblyInfo.fs" />
+    <Compile Include="..\ES.Fslog\LogLevel.fs" Link="LogLevel.fs" />
+    <Compile Include="..\ES.Fslog\LogAttribute.fs" Link="LogAttribute.fs" />
+    <Compile Include="..\ES.Fslog\LogEvent.fs" Link="LogEvent.fs" />
+    <Compile Include="..\ES.Fslog\ILogger.fs" Link="ILogger.fs" />
+    <Compile Include="..\ES.Fslog\LogSourceAnalyzer.fs" Link="LogSourceAnalyzer.fs" />
+    <Compile Include="..\ES.Fslog\Reflection.fs" Link="Reflection.fs" />
+    <Compile Include="..\ES.Fslog\LogSource.fs" Link="LogSource.fs" />
+    <Compile Include="..\ES.Fslog\LogSourceBuilder.fs" Link="LogSourceBuilder.fs" />
+    <Compile Include="..\ES.Fslog\ILogProvider.fs" Link="ILogProvider.fs" />
+    <Compile Include="..\ES.Fslog\LogProvider.fs" Link="LogProvider.fs" />
+    <Compile Include="..\ES.Fslog\Compose.fs" Link="Compose.fs" />
+    <Compile Include="..\ES.Fslog\TextFormatters\ITextFormatter.fs" Link="TextFormatters\ITextFormatter.fs" />
+    <Compile Include="..\ES.Fslog\TextFormatters\ConsoleLogFormatter.fs" Link="TextFormatters\ConsoleLogFormatter.fs" />
+    <Compile Include="..\ES.Fslog\TextFormatters\FileLogFormatter.fs" Link="TextFormatters\FileLogFormatter.fs" />
+    <Compile Include="..\ES.Fslog\TextFormatters\TextWriterLogFormatter.fs" Link="TextFormatters\TextWriterLogFormatter.fs" />
+    <Compile Include="..\ES.Fslog\Loggers\BaseLogger.fs" Link="Loggers\BaseLogger.fs" />
+    <Compile Include="..\ES.Fslog\Loggers\ConsoleLogger.fs" Link="Loggers\ConsoleLogger.fs" />
+    <Compile Include="..\ES.Fslog\Loggers\FileLogger.fs" Link="Loggers\FileLogger.fs" />
+    <Compile Include="..\ES.Fslog\Loggers\TextWriterLogger.fs" Link="Loggers\TextWriterLogger.fs" />    
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

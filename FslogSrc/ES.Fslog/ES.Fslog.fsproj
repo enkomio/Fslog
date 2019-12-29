@@ -9,8 +9,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ES.Fslog</RootNamespace>
     <AssemblyName>ES.Fslog</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFSharpCoreVersion>4.4.3.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Name>ES.Fslog</Name>
     <TargetFrameworkProfile />
@@ -34,39 +34,6 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\ES.Fslog.XML</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="LogLevel.fs" />
-    <Compile Include="LogAttribute.fs" />
-    <Compile Include="LogEvent.fs" />
-    <Compile Include="ILogger.fs" />
-    <Compile Include="LogSourceAnalyzer.fs" />
-    <Compile Include="Reflection.fs" />
-    <Compile Include="LogSource.fs" />
-    <Compile Include="LogSourceBuilder.fs" />
-    <Compile Include="ILogProvider.fs" />
-    <Compile Include="Compose.fs" />
-    <Compile Include="LogProvider.fs" />
-    <Compile Include="TextFormatters\ITextFormatter.fs" />
-    <Compile Include="TextFormatters\ConsoleLogFormatter.fs" />
-    <Compile Include="TextFormatters\FileLogFormatter.fs" />
-    <Compile Include="TextFormatters\TextWriterLogFormatter.fs" />
-    <Compile Include="Loggers\BaseLogger.fs" />
-    <Compile Include="Loggers\ConsoleLogger.fs" />
-    <Compile Include="Loggers\FileLogger.fs" />
-    <Compile Include="Loggers\TextWriterLogger.fs" />
-    <Compile Include="AssemblyInfo.fs">
-      <Link>AssemblyInfo.fs</Link>
-    </Compile>
-  </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
@@ -83,6 +50,40 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
+  <ItemGroup>
+    <Compile Include="LogLevel.fs" />
+    <Compile Include="LogAttribute.fs" />
+    <Compile Include="LogEvent.fs" />
+    <Compile Include="ILogger.fs" />
+    <Compile Include="LogSourceAnalyzer.fs" />
+    <Compile Include="Reflection.fs" />
+    <Compile Include="LogSource.fs" />
+    <Compile Include="LogSourceBuilder.fs" />
+    <Compile Include="ILogProvider.fs" />
+    <Compile Include="LogProvider.fs" />
+    <Compile Include="Compose.fs" />
+    <Compile Include="TextFormatters\ITextFormatter.fs" />
+    <Compile Include="TextFormatters\ConsoleLogFormatter.fs" />
+    <Compile Include="TextFormatters\FileLogFormatter.fs" />
+    <Compile Include="TextFormatters\TextWriterLogFormatter.fs" />
+    <Compile Include="Loggers\BaseLogger.fs" />
+    <Compile Include="Loggers\ConsoleLogger.fs" />
+    <Compile Include="Loggers\FileLogger.fs" />
+    <Compile Include="Loggers\TextWriterLogger.fs" />
+    <Compile Include="AssemblyInfo.fs">
+      <Link>AssemblyInfo.fs</Link>
+    </Compile>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

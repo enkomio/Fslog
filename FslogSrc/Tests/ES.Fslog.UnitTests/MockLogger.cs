@@ -13,14 +13,14 @@ namespace ES.Fslog.UnitTests
         public IEnumerable<LogEvent> Events { get; protected set; }
         public LogEvent LastLoggedEvent { get; protected set; }
         public Int32 NumOfLoggedEvents { get; protected set; }
-        public LogLevel Level { get; set; }
+        public override LogLevel Level { get; }
 
-        public MockLogger()
+        public MockLogger(LogLevel level = LogLevel.Warning)
         {
             this.Events = new List<LogEvent>();
             this.LastLoggedEvent = null;
             this.NumOfLoggedEvents = 0;
-            this.Level = LogLevel.Warning;
+            this.Level = level;
         }
 
         public Boolean ContainsLogMessage(String message)

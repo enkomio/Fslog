@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0C7FE8F9-FFA3-4DE7-96CE-8E60DAA47A36}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ES.Fslog", "ES.Fslog\ES.Fslog.fsproj", "{D88E9D8F-0F58-452B-94E1-BF0C78953179}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SmokeTests", "Tests\SmokeTests\SmokeTests.fsproj", "{F5B0D1D9-EBDA-48FD-A3B6-ED019BF6F07C}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ES.Fslog.Core", "ES.Fslog.Core\ES.Fslog.Core.fsproj", "{9C921736-D9B8-437E-9583-8CA538B21E83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{F5B0D1D9-EBDA-48FD-A3B6-ED019BF6F07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5B0D1D9-EBDA-48FD-A3B6-ED019BF6F07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5B0D1D9-EBDA-48FD-A3B6-ED019BF6F07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C921736-D9B8-437E-9583-8CA538B21E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C921736-D9B8-437E-9583-8CA538B21E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C921736-D9B8-437E-9583-8CA538B21E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C921736-D9B8-437E-9583-8CA538B21E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{334A08AA-7E6B-4A44-9DBF-2537A3448C5F} = {0C7FE8F9-FFA3-4DE7-96CE-8E60DAA47A36}
 		{F5B0D1D9-EBDA-48FD-A3B6-ED019BF6F07C} = {0C7FE8F9-FFA3-4DE7-96CE-8E60DAA47A36}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0D638C3C-0B88-4D40-A009-8813B92665C7}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Tests\SmokeTest\SmokeTest.fsproj
