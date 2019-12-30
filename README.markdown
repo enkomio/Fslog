@@ -123,9 +123,7 @@ or for .NET Core
 <div class="row">
   <div class="span1"></div>
   <div class="span6">
-    <div class="well well-small" id="nuget">
-      FSLOG is also available <a href="http://www.nuget.org/packages/ES.Fslog.Core">on NuGet</a>.
-      To install the tool, run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">Package Manager Console</a>:
+    <div class="well well-small" id="nuget">     
       <pre>PM> Install-Package ES.Fslog.Core</pre>
     </div>
   </div>
