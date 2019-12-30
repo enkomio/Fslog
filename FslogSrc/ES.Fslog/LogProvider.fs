@@ -1,14 +1,13 @@
 ﻿namespace ES.Fslog
 
 open System
-open System.Diagnostics
-open System.Collections.Concurrent
 open System.Collections.Generic
 
 type LogProvider() = 
     static let _instance = new Lazy<ILogProvider>(new Func<ILogProvider>(fun () -> upcast new LogProvider()))
-    static let _logProviders = new ConcurrentDictionary<Guid, ILogProvider>()
+    static let _logProviders = new Dictionary<Guid, ILogProvider>()
 
+    let _syncRoot = new Object()
     let _loggers = new List<ILogger>()
     let _logSources = new List<LogSource>()
 
@@ -21,14 +20,18 @@ type LogProvider() =
     member this.Id = Guid.NewGuid()
 
     member this.AddLogSourceToLoggers(logSource: LogSource) =
-        if not <| _logSources.Contains(logSource) then
-            _logSources.Add(logSource)
-            updateLoggers()
+        lock _syncRoot (fun () ->
+            if not <| _logSources.Contains(logSource) then
+                _logSources.Add(logSource)
+                updateLoggers()
+        )        
         
     member this.AddLogger(logger: ILogger) =
-        if not <| _loggers.Contains(logger) then
-            _loggers.Add(logger)
-            updateLoggers()
+        lock _syncRoot (fun () ->
+            if not <| _loggers.Contains(logger) then
+                _loggers.Add(logger)
+                updateLoggers()
+        )
 
     static member GetDefault() =
         _instance.Value
@@ -41,7 +44,10 @@ type LogProvider() =
 
     member this.Dispose() =
         _loggers
-        |> Seq.iter(fun logger -> match logger with | :? IDisposable as disposable -> disposable.Dispose() | _ -> ())
+        |> Seq.iter(function
+            | :? IDisposable as disposable -> disposable.Dispose()
+            | _ -> ()
+        )
 
     member this.GetSources() =
         _logSources |> Seq.toArray
