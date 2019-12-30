@@ -2,6 +2,8 @@
 
 "FSLOG - F# Log" is a simple yet powerful logging framework written in order to be used with a semantic approach in mind.
 
+A .NET Core version is also availbel as Nuget package: <a href="https://www.nuget.org/packages/ES.Fslog.Core">https://www.nuget.org/packages/ES.Fslog.Core</a>
+
 # Using FSLOG
 
 ### On F#:
@@ -111,6 +113,20 @@ You can download the source code from [https://github.com/enkomio/Fslog/archive/
       FSLOG is also available <a href="http://www.nuget.org/packages/FSharpLog">on NuGet</a>.
       To install the tool, run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">Package Manager Console</a>:
       <pre>PM> Install-Package FSharpLog</pre>
+    </div>
+  </div>
+  <div class="span1"></div>
+</div>
+
+or for .NET Core
+
+<div class="row">
+  <div class="span1"></div>
+  <div class="span6">
+    <div class="well well-small" id="nuget">
+      FSLOG is also available <a href="http://www.nuget.org/packages/ES.Fslog.Core">on NuGet</a>.
+      To install the tool, run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">Package Manager Console</a>:
+      <pre>PM> Install-Package ES.Fslog.Core</pre>
     </div>
   </div>
   <div class="span1"></div>
